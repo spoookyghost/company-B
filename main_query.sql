@@ -19,8 +19,8 @@ CASE
   WHEN epcs_0 IN (SELECT EPCs FROM X
 WHERE
 datetime_fin >= DATE_SUB((SELECT max(datetime_fin) as date FROM X WHERE Statut = "PROPRE"), INTERVAL 40 hour) AND Statut = "PROPRE")
-  AND epcs_0 NOT IN (SELECT * FROM reserve)
-  AND epcs_0 NOT IN (SELECT * FROM rebut)
+  AND epcs_0 NOT IN (SELECT * FROM D)
+  AND epcs_0 NOT IN (SELECT * FROM E)
   
 THEN "A"
 
@@ -30,25 +30,25 @@ WHERE
 datetime_fin < DATE_SUB((SELECT max(datetime_fin) as date FROM X WHERE Statut = "PROPRE"), INTERVAL 40 hour)
 AND
 datetime_fin >= DATE_SUB((SELECT max(datetime_fin) as date FROM X WHERE Statut = "PROPRE"), INTERVAL 64 hour) AND Statut = "PROPRE")
-  AND epcs_0 NOT IN (SELECT * FROM reserve)
-  AND epcs_0 NOT IN (SELECT * FROM rebut)
+  AND epcs_0 NOT IN (SELECT * FROM D)
+  AND epcs_0 NOT IN (SELECT * FROM E)
 THEN "B"
 
   WHEN epcs_0 
   IN (SELECT EPCs FROM X
 WHERE
 DATETIME(datetime_fin) < DATE_SUB((SELECT max(datetime_fin) as date FROM X WHERE Statut = "PROPRE"), INTERVAL 64 hour) AND Statut = "PROPRE")
-  AND epcs_0 NOT IN (SELECT * FROM reserve)
-  AND epcs_0 NOT IN (SELECT * FROM rebut)
+  AND epcs_0 NOT IN (SELECT * FROM D)
+  AND epcs_0 NOT IN (SELECT * FROM E)
 THEN "C"
 
   WHEN
-  epcs_0 IN (SELECT * FROM reserve)
-  AND epcs_0 NOT IN (SELECT * FROM rebut)
+  epcs_0 IN (SELECT * FROM D)
+  AND epcs_0 NOT IN (SELECT * FROM E)
 THEN "D"
 
-WHEN epcs_0 NOT IN (SELECT * FROM reserve)
-  AND epcs_0 IN (SELECT * FROM rebut)
+WHEN epcs_0 NOT IN (SELECT * FROM D)
+  AND epcs_0 IN (SELECT * FROM E)
 THEN "E"
 
   WHEN epcs_0
