@@ -52,12 +52,12 @@ id_uploaded_list = [item[0] for item in id_uploaded_list]
 
 df_merged = pd.DataFrame()
 
-# List of all the files in the folder "Data"
+# List of all the files in the folder "Data Chabert"
 id_to_upload_list = printChildren("Z")
 
 for id in id_to_upload_list:
     
-    # Different condition if the id is the one of the "database BK"
+    # Different condition if the id is the one of the "database quick chabert"
     if id == "X":
         
         database = pd.DataFrame(worksheet.get_all_records())
@@ -71,7 +71,7 @@ for id in id_to_upload_list:
         path = "https://drive.google.com/uc?export=download&id=" + csv_file_url.split("/")[-2]
     
         original_df = pd.read_csv(path, header = None)
-    
+        
         # Process the metadata of the file
         metadata = original_df.head(2)
 
@@ -129,7 +129,7 @@ for id in id_to_upload_list:
             row_value_split_in_list = row_value.split(";")
             row_value_split_in_list = row_value_split_in_list[0:3]
             l2.append(row_value_split_in_list)
-        
+
         # Combine the metadata and data in one dataframe 
         df2 = pd.DataFrame(l2)
         df2 = df2.rename(columns= df2.iloc[0]).loc[1:]
@@ -159,6 +159,8 @@ for id in id_to_upload_list:
         df3["datetime fin"] = pd.to_datetime(df3["datetime fin"], dayfirst=True)
         
         df3["epcs de zone"] = df3["epcs de zone"].str.replace("'", "")
+        
+        df3["epcs de zone"] = df3["epcs de zone"].astype(str)
     
         df3 = df3.drop(columns = {"date", "heure debut", "heure fin"})
     
@@ -167,8 +169,9 @@ for id in id_to_upload_list:
         df_merged = df_merged.reset_index(drop=True)
         
 # Combine the data to upload with the previously uploaded data and push it to Google Sheets
+if database["epcs de zone"].empty = False
+    database["epcs de zone"] = database["epcs de zone"].astype(str)
 df_to_push = pd.concat([df_merged, database])
-
 worksheet.clear()
 
 set_with_dataframe(worksheet, df_to_push, row, col)
