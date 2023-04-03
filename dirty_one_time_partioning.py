@@ -25,33 +25,7 @@ df_merged = pd.DataFrame()
 for i in range(len(date_range)):
         
     q1 = """
-SELECT epcs_0 as EPCs, ean, description, effectiveAt, 
-CASE WHEN epcs_0 
-IN 
-(SELECT EPCs FROM X WHERE Statut = "?" 
-AND DATETIME(datetime_fin) BETWEEN DATETIME('{}', "-2 day") AND DATETIME('{}'))
-THEN "?"
-  WHEN epcs_0 
-IN 
-(SELECT EPCs FROM X
-WHERE
-DATETIME(datetime_fin) BETWEEN DATETIME('{}', "-3 day") AND DATETIME('{}', "-2 day")
-AND Statut == "?") 
-THEN "?"
-  WHEN epcs_0 
-IN 
-(SELECT EPCs FROM X
-WHERE
-DATETIME(datetime_fin) < DATETIME('{}', "-3 day")) 
-THEN "?"
-    
-WHEN epcs_0
-NOT IN (SELECT EPCs FROM X)
-  
-THEN "?"
-ELSE "?"
-END as activity
-FROM Y
+XXX
 """.format(date_range["date"][i], date_range["date"][i], date_range["date"][i], date_range["date"][i], date_range["date"][i], date_range["date"][i])
 
     sub_data = pandasql.sqldf(q1, globals())
