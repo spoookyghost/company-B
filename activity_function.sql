@@ -72,10 +72,6 @@ THEN “W”
   AND epcs_0 NOT IN (SELECT * FROM F)
 THEN “V”
 
-WHEN epcs_0 NOT IN (SELECT * FROM E )
-  AND epcs_0 IN (SELECT * FROM F)
-THEN “Z”
-
   WHEN epcs_0
   NOT IN (SELECT EPCs FROM `B` WHERE restaurant = resto)
 THEN “U”
